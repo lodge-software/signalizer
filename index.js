@@ -6,25 +6,29 @@ http.listen(7000);
 
 console.log(`server running`);
 
-io.on('connection', (client) => {
-    console.log(`new connection: ${client.id}`);
+io.on('connection', (socket) => {
+    console.log(`new connection: ${socket.id}`);
 
-    client.on('offer', (details) => {
-        client.broadcast.emit('offer', details);
+    socket.on('offer', (details) => {
+        socket.broadcast.emit('offer', details);
 
         console.log(`offer: ${JSON.stringify(details.desc)}`);
         console.log(`socket: ${JSON.stringify(details.socket)}`);
     })
 
-    client.on('answer', (details) => {
-        client.broadcast.emit('answer', details);
+    socket.on('answer', (details) => {
+        socket.broadcast.emit('answer', details);
         console.log(`answer: ${JSON.stringify(details)}`);
     })
 
-    client.on('candidate', (details) => {
-        client.broadcast.emit('candidate', details);
+    socket.on('candidate', (details) => {
+        socket.broadcast.emit('candidate', details);
         console.log(`candidate: ${JSON.stringify(details)}`);
     })
 
-    client.broadcast.emit('createoffer', {});
+    socket.broadcast.emit('createoffer', {});
+
+    socket.on('disconnect', () => {
+        console.log(`The socket id: ${socket.id} has disconnected`);
+      });
 })
