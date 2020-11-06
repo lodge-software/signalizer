@@ -11,9 +11,7 @@ io.on('connection', (socket) => {
 
     socket.on('offer', (details) => {
         socket.broadcast.emit('offer', details);
-
-        console.log(`offer: ${JSON.stringify(details.desc)}`);
-        console.log(`socket: ${JSON.stringify(details.socket)}`);
+        console.log(`offer: ${JSON.stringify(details)}`);
     })
 
     socket.on('answer', (details) => {
