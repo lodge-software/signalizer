@@ -19,8 +19,8 @@ io.on('connection', (socket) => {
         console.log(`answer: ${JSON.stringify(details)}`);
     })
 
-    socket.on('candidate', (details) => {
-        socket.broadcast.emit('candidate', details);
+    socket.on('new-ice-candidate', (details) => {
+        socket.broadcast.emit('new-ice-candidate', details);
         console.log(`candidate: ${JSON.stringify(details)}`);
     })
 
