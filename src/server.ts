@@ -13,6 +13,7 @@ io.on('connection', (socket: socketio.Socket) => {
     console.log(`new connection: ${socket.id}`);
 
     socket.on('offer', (payload: Signal) => {
+<<<<<<< HEAD
         if (!payload.room) {
             // Not thoroghly tested
             const room = `room-${payload.origin}`;
@@ -43,10 +44,31 @@ io.on('connection', (socket: socketio.Socket) => {
         }
         console.log(`answer: ${JSON.stringify(payload)}`);
     });
+=======
+        // if (!payload.room) {
+        //     payload.room = `room-${payload.origin}`;
+        //     socket.join(payload.room);
+        //     io.to(payload.origin).emit('joined room', payload.room);
+        //     socket.to(payload.room).emit('offer', payload);
+        // } else {
+        //     socket.join(payload.room);
+        //     socket.to(payload.room).emit('offer', payload);
+        // }
+        socket.broadcast.emit('offer', payload);
+
+        console.log(`offer: ${JSON.stringify(payload)}`);
+    })
+
+    socket.on('answer', (payload) => {
+        socket.broadcast.emit('answer', payload);
+        console.log(`answer: ${JSON.stringify(payload)}`);
+    })
+>>>>>>> c619c117278eeb475e4b12971dfb09ebd92deab6
 
     socket.on('new-ice-candidate', (payload) => {
         socket.broadcast.emit('new-ice-candidate', payload);
         console.log(`new-ice-candidate: ${JSON.stringify(payload)}`);
+<<<<<<< HEAD
     });
 
     socket.on('join room', (payload) => {
@@ -56,6 +78,9 @@ io.on('connection', (socket: socketio.Socket) => {
         // locked room
         // if (locked) emit cannot join room
     });
+=======
+    })
+>>>>>>> c619c117278eeb475e4b12971dfb09ebd92deab6
 
     socket.broadcast.emit('createoffer', {});
 
