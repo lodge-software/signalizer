@@ -24,6 +24,7 @@ io.on('connection', (socket: socketio.Socket) => {
                 socket.to(payload.target).emit('offer', payload);
             } else {
                 socket.to(room).emit('offer', payload);
+                // return error if no one in the room?
             }
         } else {
             socket.join(payload.room);
@@ -34,7 +35,7 @@ io.on('connection', (socket: socketio.Socket) => {
 
     socket.on('answer', (payload) => {
         // Should have a room already
-        if (payload.target != '') {
+        if (payload.target) {
             console.log(`Sending answer to socket id: ${payload.target}`);
             socket.to(payload.target).emit('answer', payload);
         } else {
